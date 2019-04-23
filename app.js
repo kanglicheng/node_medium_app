@@ -39,6 +39,7 @@ if(isProduction){
 }
 
 app.use(require('./routes'));
+app.use(require('./routes'));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
