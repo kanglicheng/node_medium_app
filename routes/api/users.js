@@ -6,6 +6,14 @@ var auth = require('../auth');
 
 module.exports = router;
 
+router.get('/user', auth.required, function(req, res, next){
+  User.findById(req.payload.id).then(function(user){
+    if(!user){ return res.sendStatus(401); }
+
+    return res.json({user: user.toAuthJSON()});
+  }).catch(next);
+});
+
 router.post('/users/login', function(req, res, next){
   if(!req.body.user.email){
     return res.status(422).json({errors: {email: "can't be blank"}});
@@ -28,4 +36,3 @@ router.post('/users/login', function(req, res, next){
 
     })(req, res, next);
   });
-  
